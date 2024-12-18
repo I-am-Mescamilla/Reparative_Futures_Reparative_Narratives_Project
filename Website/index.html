@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Schools at Jackson</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/mapbox/assembly/publisher-staging/src/svgs/mapbox.svg">
+
+      <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="The Price of Passage" />
+    <meta property="og:description" content="Explore the challenges and implications of migration through Mexico, featuring interactive maps and in-depth analysis related to insecurity rates and drug cartels presence." />
+    <meta property="og:image" content="https://raw.githubusercontent.com/I-am-Mescamilla/Mapping_Countermapping/refs/heads/main/Project/images/Cartel_Map_S.png" />
+    <meta property="og:url" content="https://i-am-mescamilla.github.io/Mapping_Countermapping/Project/index.html" />
+    <meta property="og:type" content="website" />
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <link href='./style.css' rel='stylesheet' />
+
+    <!--Font from Google-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cutive&family=Special+Elite&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div id="map"></div>
+<div id="mapInset"></div>
+<div id="story"></div>
+
+<div style="visibility: hidden;" id="routes_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+</div>
+
+<div style="visibility: hidden;" id="support_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Route Types</h4>
+    <div><span style="background-color: #00ff00;"></span> Shelters</div>
+    <div><span style="background-color: #ff00ff;"></span> Health Services</div>
+</div>
+
+<div style="visibility: hidden;" id="INM_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Crimes to Migrants (2016-23)</h4>
+    <div><span style="background-color: #ffe5e5;"></span> 60-150</div>
+    <div><span style="background-color: #ffb3b3;"></span> 150-329</div>
+    <div><span style="background-color: #ff8080;"></span> 329-1,1571</div>
+    <div><span style="background-color: #ff4d4d;"></span> 1,571-1,881</div>
+</div>
+
+<div style="visibility: hidden;" id="CNDH_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Registered Kidnaps (2011-21)</h4>
+    <div><span style="background-color: #f8dfd9;"></span> 1-113</div>
+    <div><span style="background-color: #fac2bd;"></span> 113-260</div>
+    <div><span style="background-color: #fba5a1;"></span> 260-727</div>
+    <div><span style="background-color: #fc8785;"></span> 727-3,014</div>
+    <div><span style="background-color: #fe6a69;"></span> 3,014-7,412</div>
+    <div><span style="background-color: #ff4d4d;"></span> 7,412-8,780</div>
+</div>
+
+<div style="visibility: hidden;" id="routes_height" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Crossed Municipalities Heigth</h4>
+    <h4>(mamsl)</h4>
+    <div class="gradient-bar"></div>
+    <div class="labels">
+        <span>0______________________2700</span>
+    </div>
+</div>
+
+<div style="visibility: hidden;" id="crossed_territories" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span></div>
+    <h4>Crossed Territories</h4>
+    <div><span style="background-color: rgba(255, 255, 255, .50);"></span>Municipalities</div>
+    <div><span style="background-color: rgba(255, 255, 255, .25);"></span>States</div>
+</div>
+
+<div style="visibility: hidden;" id="routes_climate_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span></div>
+    <h4>Crossed Climates</h4>
+    <div><span style="background-color: rgba(255, 0, 0, .5);"></span> Heatwave</div>
+    <div><span style="background-color: #2b83ba;"></span> Humid Warm</div>
+    <div><span style="background-color: #4193b6;"></span> Subhumid Warm</div>
+    <div><span style="background-color: #58a2b2;"></span> Semiwarm Humid</div>
+    <div><span style="background-color: #6eb2af;"></span> Semiwarm Subhumid</div>
+    <div><span style="background-color: #84c2ab;"></span> Mild Humid</div>
+    <div><span style="background-color: #9ad1a7;"></span> Mild Subhumid</div>
+    <div><span style="background-color: #afdea5;"></span> Semicold Subhumid</div>
+    <div><span style="background-color: #bde4aa;"></span> Semidry Very Warm</div>
+    <div><span style="background-color: #cceaaf"></span> Semidry Warm</div>
+    <div><span style="background-color: #daf0b3;"></span> Semidry Semiwarm</div>
+    <div><span style="background-color: #e9f6b8;"></span> Semidry Mild</div>
+    <div><span style="background-color: #f8fcbd;"></span> Semidry Semicold</div>
+    <div><span style="background-color: #fff8b7;"></span> Dry Very Warm</div>
+    <div><span style="background-color: #feeaa6;"></span> Dry Warm</div>
+    <div><span style="background-color: #fedc96;"></span> Dry Semiwarm</div>
+    <div><span style="background-color: #fece86;"></span> Dry Mild</div>
+    <div><span style="background-color: #fdc075;"></span> Very Dry Very Warm</div>
+    <div><span style="background-color: #fdb265;"></span> Very Dry Warm</div>
+    <div><span style="background-color: #f89b58;"></span> Very Dry Semiwarm</div>
+    <div><span style="background-color: #f1814c;"></span> Very Dry Mild</div>
+    <div><span style="background-color: #ff00ff;"></span> Cold</div>
+</div>
+
+<div style="visibility: hidden;" id="routes_insecurity_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Insecurity Perception</h4>
+    <div><span style="background-color: #e6e6e6;"></span> 14-34%</div>
+    <div><span style="background-color: #999999;"></span> 34-54%</div>
+    <div><span style="background-color: #4d4d4d;"></span> 54-69%</div>
+    <div><span style="background-color: #000000;"></span> 69-92%</div>
+</div>
+
+<div style="visibility: hidden;" id="routes_dead_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Dead and Encountered Migrants  <br>(Size per number of people involved)</h4>
+    <div><span style="background-color: #ff963d;"></span> Incidents Locations</div>
+    <div><span style="background-color: #99ecff;"></span> Encounters</div>
+</div>
+
+<div style="visibility: hidden;" id="routes_dead_legend_z" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Dead and Encountered Migrants  <br>(Size per number of people involved)</h4>
+    <div><span style="background-color: rgba(255, 0, 0, .6);"></span> Incidents Locations</div>
+    <div><span style="background-color: #99ecff;"></span> Encounters</div>
+</div>
+
+<div style="visibility: hidden;" id="bivariate_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Insecurity Perception</h4>
+    <div><span style="background-color: #e6e6e6;"></span> 14-34%</div>
+    <div><span style="background-color: #999999;"></span> 34-54%</div>
+    <div><span style="background-color: #4d4d4d;"></span> 54-69%</div>
+    <div><span style="background-color: #000000;"></span> 69-92%</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Poverty vs Crime Rates<br></h4>
+    <!-- Legend Container -->
+    <div  style="
+            position: relative; 
+            width: 150px; 
+            height: 150px; 
+            margin: auto; 
+            display: flex; 
+            justify-content: center; /* Horizontal alignment */
+            align-items: center; /* Vertical alignment */
+        ">
+        <!-- X-Axis Label -->
+        <div style="position: absolute; top: 140px; left: 50%; transform: translateX(-50%); font-weight: bold;">
+            - Crime +
+        </div>
+        <!-- Y-Axis Label -->
+        <div style="position: absolute; bottom: 50%; left: -45px; transform: translateY(50%) rotate(-90deg); font-weight: bold;">
+            - Poverty % +
+        </div>
+        <!-- 3x3 Grid for Legend -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 2px; left: -30px; width: 80%; height: 80%;">
+            <!-- Low Poverty -->
+            <div style="background-color: #db8cc9;"></div> <!-- Less Crime -->
+            <div style="background-color: #ad8bc1;"></div> <!-- Medium Crime -->
+            <div style="background-color: #667b9e;"></div> <!-- High Crime-->
+            
+            <!-- Medium Poverty -->
+            <div style="background-color: #deb8d4;"></div> <!-- Less Crime -->
+            <div style="background-color: #89bedc;"></div> <!-- Medium Crime -->
+            <div style="background-color: #6fbda0;"></div> <!-- High Crime -->
+            
+            <!-- High Poverty -->
+            <div style="background-color: #e5e5e5;"></div> <!-- Less Crime -->
+            <div style="background-color: #c0edc3;"></div> <!-- Medium Crime -->
+            <div style="background-color: #7ee09f;"></div> <!-- High Crime -->
+        </div>
+    </div>
+</div>
+
+<div style="visibility: hidden;" id="routes_deadtype_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Dead or Missing Migrants, classified per casue of dead <br>(Size per number of people involved)</h4>
+    <div><span style="background-color: white;"></span> Mixed or Unknown</div>
+    <div><span style="background-color: yellow;"></span> Violenece</div>
+    <div><span style="background-color: cyan;"></span> Drowning</div>
+    <div><span style="background-color: #00ff00;"></span> Harsh Environmental Conditions</div>
+    <div><span style="background-color: red;"></span> Vehicle Accident</div>
+    <div><span style="background-color: blue;"></span> Sickness</div>
+</div>
+
+<div style="visibility: hidden;" id="crime_rates_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Crimes of Interest per 1000 Habitants<br>(average per year)</h4>
+    <div><span style="background-color: #d7b3ff;"></span> 4.2 - 7.5</div>
+    <div><span style="background-color: #b066ff;"></span> 7.5 - 12.8</div>
+    <div><span style="background-color: #7d00ff;"></span> 12.8 - 29.11</div>
+</div>
+
+<div style="visibility: hidden;" id="Drug_Cartel_legend" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Drug Cartel</h4>
+    <div><span style="background-color: #00fd00;"></span> Cartel Jalisco Nueva Generación</div>
+    <div><span style="background-color: #ff00ff;"></span> Cartel de Sinaloa</div>
+    <div><span style="background-color: #00ffff;"></span> Nuevo Cartel de Juarez</div>
+    <div><span style="background-color: #0000ff;"></span> Cartel del Noreste</div>
+    <div><span style="background-color: #ff0000;"></span> La Familia Michoacana</div>
+    <div><span style="background-color: #a0ff00;"></span> Los Zetas</div>
+    <div><span style="background-color: #cfcfcf;"></span> Caballeros Templarios</div>
+    <div><span style="background-color: #bc6738;"></span> Union Tepito</div>
+    <div><span style="background-color: #ffff00;"></span> Cartel del Golfo</div>
+    <div><span style="background-color: #ff008c;"></span> Los Yglesias</div>
+    <div><span style="background-color: #000000;"></span> Contested</div>
+    <div><span style="background-color: rgba(153, 153, 153, .3);"></span> Small Organizations</div>
+    <div><span style="background-color: rgba(207, 207, 207, .4);"></span> Low Cartel Activity</div>
+</div>
+
+<div style="visibility: hidden;" id="Cartel_Conflict" class="legend">
+    <h4>Route Types</h4>
+    <div><span style="background-color: red;"></span> Walking Route</div>
+    <div><span style="background-color: white;"></span> Train Route</div>
+    <div><span style="background-color: black;"></span> </div>
+    <h4>Number of Cartels in the Municipality</h4>
+    <div><span style="background-color: #babada;"></span> 2</div>
+    <div><span style="background-color: #8c88bf;"></span> 3</div>
+    <div><span style="background-color: #63439c;"></span> 4</div>
+    <div><span style="background-color: #3f007d;"></span> 5 - 8</div>
+</div>
+
+<script src="./config.js"></script>
+<script src="./script.js"></script>
+
+</body>
+</html>
