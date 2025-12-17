@@ -1,0 +1,459 @@
+:root{
+  --bg:#0f172a;       /* slate-900 */
+  --panel:#111827;    /* gray-900 */
+  --text:#e5e7eb;     /* gray-200 */
+  --muted:#94a3b8;    /* slate-400 */
+  --accent:#4f46e5;   /* indigo-600 */
+  --good:#16a34a;     /* green-600 */
+  --warn:#f59e0b;     /* amber-500 */
+  --bad:#dc2626;      /* red-600 */
+  --baby: #4abdff;
+  --card:#0b1220;
+  --border:#1f2937;
+}
+
+*{box-sizing:border-box}
+html,body{
+  height:100%;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif
+}
+
+/* ===== Layout ===== */
+.app{
+  display:grid;
+  grid-template-columns:380px 1fr 500px;
+  grid-template-rows:70px 1fr;
+  grid-template-areas:
+    "topbar topbar topbar"
+    "sidebar map timeline";
+  height:100vh;
+
+  /* IMPORTANT: prevents grid reflow loops */
+  min-height:0;
+  min-width:0;
+}
+
+/* IMPORTANT: allow grid children to shrink (prevents vibration) */
+.timeline,
+.sidebar,
+#map,
+.side-scroll{
+  min-height:0;
+  min-width:0;
+}
+
+/* ===== Timeline ===== */
+.timeline{
+  grid-area: timeline;
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto;
+  overflow-x:hidden;
+  height:100%;
+  padding:1rem;
+  border-left:1px solid var(--border);
+  background:var(--panel);
+
+  scrollbar-width:thin;                         /* Firefox */
+  scrollbar-color:var(--accent) var(--card);    /* Firefox */
+  scrollbar-gutter: stable;                     /* modern browsers */
+}
+
+/* Timeline scrollbar (Chrome/Edge/Safari) */
+.timeline::-webkit-scrollbar{ width:8px; }
+.timeline::-webkit-scrollbar-track{ background:var(--card); }
+.timeline::-webkit-scrollbar-thumb{
+  background-color:var(--accent);
+  border-radius:4px;
+  border:2px solid var(--card);
+}
+
+/* ===== Topbar ===== */
+.topbar{
+  grid-area:topbar;
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  padding:.75rem 1rem;
+  background:linear-gradient(180deg,#0b1120,#0b112000);
+  border-bottom:1px solid var(--border)
+}
+
+.pill{
+  padding:.2rem .5rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--muted)
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+  grid-area:sidebar;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  border-right:1px solid var(--border);
+  background:radial-gradient(1200px 600px at -200px -200px,#0b1120 20%,transparent 60%), var(--panel)
+}
+
+.side-scroll{
+  overflow:auto;
+  height:100%;
+  padding:1rem;
+  scrollbar-gutter: stable;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:1rem;
+  margin-bottom:1rem
+}
+
+.card h3{margin:.2rem 0 .6rem 0;font-size:1rem}
+.muted{color:var(--text)}
+.row{display:flex;gap:.5rem;flex-wrap:wrap}
+
+.kpi{
+  flex:1 1 45%;
+  min-width:140px;
+  background:linear-gradient(180deg,#0b1120,#0b112000);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.75rem
+}
+.kpi .label{font-size:.8rem;color:var(--muted)}
+.kpi .value{font-size:1.25rem;margin-top:.15rem}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  font-size:.78rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:.2rem .55rem
+}
+.badge.dot::before{
+  content:"";
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  display:inline-block
+}
+
+.select-hint{font-size:.92rem;color:var(--muted)}
+.btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:#0b1120;
+  color:var(--text);
+  padding:.5rem .7rem;
+  border-radius:8px;
+  cursor:pointer
+}
+.btn:focus{outline:2px solid var(--accent);outline-offset:2px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+
+/* ===== Map ===== */
+#map{
+  grid-area:map;
+  position:relative;
+  height:100%;
+  width:100%;
+  min-height:300px;
+}
+
+/* Mapbox canvas sizing ONLY (do NOT style all canvas globally) */
+#map canvas{
+  width:100% !important;
+  height:100% !important;
+  outline:none;
+}
+
+/* legend should be inside map container */
+.legend{
+  position:absolute;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:.6rem .75rem;
+  color:var(--muted);
+  font-size:.85rem;
+  z-index:10;
+}
+
+/* Top-right hint */
+.legend-hint{
+  top:12px;
+  left:12px;
+}
+
+/* Bottom-right support legend */
+.legend-support{
+  bottom:35px;
+  left:12px;
+  max-width:220px;
+}
+
+/* Legend rows */
+.legend-row{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin:.25rem 0;
+}
+
+/* Color swatches */
+.legend-swatch{
+  width:14px;
+  height:14px;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+
+
+
+
+
+
+/* ===== Chart sizes (fixed heights prevent layout thrash) ===== */
+#pie-demo{
+  width:100% !important;
+  height:100% !important; /* control pie size here */
+  display:block;
+}
+
+#bar-demo{
+  width:100% !important;
+  height:100% !important; /* control bar size here */
+  display:block;
+}
+
+/* Slider should not interfere with map gestures */
+#pie-year{
+  width:100%;
+  pointer-events:auto;
+  touch-action:pan-x;
+}
+
+/* ===== Popup image ===== */
+.popup-img{
+  width:500px;      /* control popup image size here */
+  max-width:100%;
+  height:auto;
+  display:block;
+  border-radius:10px;
+  border:1px solid var(--border);
+  margin-top:.5rem;
+}
+
+/* Optional HTML-only pie (no JS lib) */
+.pie{
+  width:140px;height:100px;border-radius:50%;
+  background:conic-gradient(var(--good) var(--p,0%), var(--warn) 0 var(--p2,0%), #1f2937 0);
+  border:1px solid var(--border)
+}
+.pie-wrap{display:flex;align-items:center;gap:1rem}
+
+.layer-toggles{display:grid;gap:.35rem}
+.layer-toggles label{display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.layer-toggles input{transform:translateY(1px)}
+
+/* ===== Mapbox popup styling ===== */
+.mapboxgl-popup{
+  max-width:500px;
+  font-family:system-ui, sans-serif;
+}
+.mapboxgl-popup-content{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  font-size:.85rem;
+  line-height:1.35;
+  padding:.75rem .9rem;
+  box-shadow:0 4px 12px rgba(0,0,0,0.35);
+}
+.mapboxgl-popup-content strong{color:var(--accent)}
+.mapboxgl-popup-tip{border-top-color:var(--card)}
+
+/* ===== Landing Modal ===== */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:9999;
+}
+
+.modal-overlay.hidden{
+  display:none;
+}
+
+.modal-card{
+  width:min(1200px, 96vw);
+  max-height: min(86vh, 860px);
+  overflow:auto;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:0 18px 60px rgba(0,0,0,0.55);
+  position:relative;
+}
+
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#0b1120;
+  color:var(--text);
+  cursor:pointer;
+}
+
+.modal-grid{
+  display:grid;
+  grid-template-rows: auto 1fr;
+  gap:0;
+}
+
+.modal-media{
+  background:#0b1120;
+  border-bottom:1px solid var(--border);
+  max-height: 500px;     /* 👈 controls image size */
+  overflow: hidden;     /* trims excess space cleanly */
+}
+
+.modal-media img{
+  max-height: 500px;   /* 👈 must match or be slightly less */
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;      /* centers horizontally */
+  object-fit: contain; /* preserves proportions */
+}
+
+.modal-body{
+  padding:20px 100px 22px 100px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  font-size: 1.25rem;
+}
+
+.modal-body h2{
+  margin:0;
+  font-size:1.35rem;
+}
+
+.modal-actions{
+  margin-top:auto;
+  display:flex;
+  justify-content:flex-start;
+}
+
+.modal-actions .btn{
+  font-size: 1.3rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 700;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.modal-actions .btn:hover{
+  filter: brightness(1.1);
+}
+
+/* Framing trigger */
+.framing-link{
+  margin: 0 0 0.75rem 0;
+  cursor:pointer;
+  user-select:none;
+}
+.framing-link:hover{
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* Responsive modal */
+@media (max-width: 900px){
+  .modal-grid{ grid-template-columns:1fr; }
+  .modal-media{
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    min-height: 220px;
+  }
+  .modal-media img{
+    border-top-right-radius:16px;
+    border-bottom-left-radius:0;
+  }
+}
+
+/* Timeline scroll container (if not already present) */
+.timeline-scroll{
+  overflow:auto;
+  height:100%;
+}
+
+/* Timeline dropdown chapters */
+.tl-drop{
+  border:1px solid var(--border);
+  background: var(--card);
+  border-radius:12px;
+  padding:.65rem .85rem;
+  margin: .75rem 0;
+}
+
+.tl-drop summary{
+  cursor:pointer;
+  font-weight:700;
+  list-style:none;
+  font-size: 1.2rem;
+}
+
+.tl-drop summary::-webkit-details-marker{
+  display:none;
+}
+
+/* caret */
+.tl-drop summary::after{
+  content:"▾";
+  float:right;
+  color:var(--text);
+  transition: transform .15s ease;
+}
+
+.tl-drop[open] summary::after{
+  transform: rotate(180deg);
+}
+
+.tl-drop p, .tl-drop ul{
+  margin:.6rem 0 0 0;
+}
+
+
+
+
+/* ===== Responsive ===== */
+@media(max-width:1000px){
+  .app{
+    grid-template-columns:1fr;
+    grid-template-rows:56px 320px 1fr;
+    grid-template-areas:"topbar" "map" "sidebar";
+  }
+}
