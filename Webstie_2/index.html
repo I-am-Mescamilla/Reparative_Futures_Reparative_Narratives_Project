@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Jackson, MS Public Schools — Map + Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Public Schools in Jackson" />
+  <meta property="og:description" content="Explore the challenges and implications of current conditions and policies of public schools in Jackson, Mississippi." />
+  <meta property="og:image" content="https://raw.githubusercontent.com/I-am-Mescamilla/Reparative_Futures_Reparative_Narratives_Project/refs/heads/main/Website_2/images/JPS_District.jpg" />
+  <meta property="og:url" content="https://i-am-mescamilla.github.io/Reparative_Futures_Reparative_Narratives_Project/Website_2/index.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Mapbox GL -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js" defer></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+  <!-- App styles -->
+  <link href="./style.css" rel="stylesheet" />
+
+  <!-- Script for buffer -->
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
+  <!-- Config first, then app script (both deferred keep order) -->
+  <script src="./config.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="pill">Jackson, MS — Public Schools</div>
+      <div class="pill">Interactive Map + Data Dashboard</div>
+      <div style="margin-left:auto" class="muted">Click a school to populate the dashboard</div>
+    </div>
+
+    <!-- 🟢 NEW TIMELINE SECTION -->
+    <div class="timeline">
+      <div class="timeline-scroll">
+        <h2>Understanding Jackson Public School System</h2>
+        <br>
+        <img src="./images/JPS_District.jpg" style="width:100%;border-radius:8px;margin-bottom:1rem;">
+        <p class="muted">
+          Click on every section below to learn more about Jackson's public schools.
+        </p>
+        <br>
+        <h3 id="open-framing" class="framing-link">Framing</h3>
+
+        <!-- ✅ Dropdown chapters -->
+        <details class="tl-drop">
+          <summary>Historical Context</summary>
+          <p class="muted">
+            How did we/Jackson get here?  
+            <br>  
+            - Whatever narrative will support the timeline
+            <br>
+            - What has been happening in Jackson since 2006 (which schools closed, policy history from early 2000s) 
+            <br>    
+          </p>
+        </details>
+
+        <details class="tl-drop">
+          <summary>What’s Happening Nationwide: Reasons for School Closures</summary>
+          <p class="muted">
+            Schools are closing nationwide. These are the common reasons we’re given: 
+            <br>      
+            - Poor physical infrastructure 
+            <br>  
+            - Poor academic performance/educational attainment 
+            <br>
+            - Declining enrollment/changing demographics  
+            <br>
+            - Budgeting issues/financial position 
+            <br>
+            <br>
+            These reasons may sound neutral or like they just make the most sense. However, often times the decision makers who are referring to these reasons to close a school, are the same ones who didn’t provide the necessary resources to address these issues when they could still be solved.
+            <br>
+            <br>
+            <b>Infrastructure</b>
+            <br>
+            <p>Poor infrastructure is a reflection of continual underinvestment, not a lack of care from a school’s community. 
+
+              [Specific stat to Jackson/maybe the reasons behind what is happening to Jackson school’s infrastructure quality – JPS policy on school renting, school that collapsed, renovations cost ore than it’s worth, maintenance not in budget!, bonds sold to renovate schools in 2017 but distribution wasn’t earmarked for all schools? → Facilities Repurposing Plan, Obama Magnet Elementary School closing June 2025; Could also include average age of the building stock, when last renovated, etc. from the spreadsheet] </p>
+            <br>
+            Poor or poorly maintained infrastructure can impact school closure decisions, and can be measured in the following ways:
+            <br>
+            - Age of the building(s) 
+            <br>
+            - Quantity of specific types of learning spaces (ex. Chemistry lab, auditorium, gymnasium, shop classroom) 
+            <br>  
+            - Amount of engagement from the community with the facilities (ie. how often is the space used by the community outside of school hours) 
+            <br>
+            <br>
+            <b>Academics</b>
+            <br>
+            <p>The No Child Left Behind Policy provides the foundation for schools to be closed on the basis of poor academic performance.  
+              [Need matriculation rate for non-high schools, which doesn’t exist? School scores from giant spreadsheet? Letter grades for the district over time, will decide later if important to map Accountability scores for schools which have closed] </p>
+            <p>Failing to meet certain academic standards can lead to the recommendation to shutter a school. Other reasons related to academics that might impact a school’s closure include:</p>
+            <br>
+            <br>
+            <b>Depopulation/Demographics </b>
+            <br>
+            <p>Jackson, like many other communities across the country, has schools that are not full. Some of the reasons why we don’t have enough kids to fill these classrooms anymore, in addition to unenrollment, include: </p>
+
+            - Declining birth rates nationwide 
+            <br>  
+            - Declining/stagnating populations locally (this is experienced in both urban and rural communities!) 
+            <br>
+            <br>
+            However, it is not just about declining populations, but also who makes up these populations. In fact, there is a “persistent association between neighborhood disadvantage and school closure” (Caven, 2019, p. 22)
+            <br>
+            <br>
+            <b>Budget Issues/Fiscal Savings</b>
+            <br>
+            <p>All of the previously mentioned factors work together and can worsen the ongoing budget issues of schools considered for closure. A smaller population provides less tax dollars for the operating budgets, as does unenrollment. Weaker, older facilities also often mean that making the necessary upgrades are more expensive than those needed by newer schools.</p>
+            <br>
+            Some of the other reasons schools might be pushed towards closure due to budget concerns include: 
+            <br>
+            - The belief that a larger, consolidated school is more cost-effective, as it requires fewer administrative workers for the number of students served (Lee and Lubienski, 2017)  
+            <br>
+            - In addition to potential cost savings, the potential revenue generated by selling the building and/or its property (Bierbaum, 2021, p. 208) 
+            <br>  
+            - A feeling that there has been some sort of financial mismanagement that must be righted, even if the issues are simply a reflection of underfunding (De Witte and Van Klaveren, 2014) 
+            <br>
+            <br>
+
+          </p>
+        </details>
+
+        <details class="tl-drop">
+          <summary>What’s Happening Nationwide: Impacts of School Closures</summary>
+          <p class="muted">
+            The closure of a neighborhood’s school can have impacts much further reaching than simply where children get to go to school. The disruption and negative experiences of a school closure can grow into: 
+            <br>
+            - Feeling detached from the community 
+            <br>
+            - Losing belief in the political system 
+            <br>
+            - Fear and harm to one’s social connections 
+            <br>
+            - Negative impacts on displaced students’ academic performance 
+            <br>
+            <br>
+            <b>Loss of Belief in Community & Political System </b>
+            <br>
+            <p>Just as schools can foster a sense of belonging, the loss of a school can lead to the sense of loss in a community.</p>
+            <br>
+            - When school shutter, the public spaces they offered are taken away as well, removing community gathering spaces (Bierbaum, 2020) and health resources (Davis et al., 2023)
+            <br>
+            - Residents can lose trust in their public leaders, if they feel their needs have not been well accommodate for 
+            <br>
+            <br>  
+            <b>Social Fears and Harm</b>
+            <br>
+            <p>Given that schools often provide more than just a physical amenity, but a sense of connection with other locals, the loss of such a space can result in a social disconnect for many. In the wake of a school closure, community members may experience, or have fears regarding the following</p>
+            <br>
+            - Uncertainty of where to place loyalty;  
+            <br>
+            - Whether or not to move on or to continue to advocate for a school once it’s been closed (Whitten et al., 2001) 
+            <br>
+            - Students that had to transfer may not fit in socially at their new school, while parents of relocated students lose their parent-networks (Witten et al., 2001) 
+            <br>
+            - Losing connection with the local community, due to longer transit times to farther schools (Lee and Lubienski, 2017) 
+            <br>
+            <br>  
+            <b>Academic Loss</b>
+            <br>
+            <p>“School closure increases the probability of high-school dropout between 49 and 68%” (Grau et al., 2018, p. 1). In addition to a higher likelihood of dropping out, there is also an association with lower academic performance levels in general, unless the students transferred to a significantly better performing school (Caven, 2019). These difficulties can be contributed to many factors, including:</p>
+            <br>
+            - New, longer commutes   
+            <br>
+            - New teachers and classmates 
+            <br>
+            - Overcrowding in now too-full classrooms (Davis et al., 2023) 
+            <br>
+            <br>
+            <b>Inequities of Impacts & Cyclical/Continues Causal Trends </b>
+            <br>
+            <p>Amongst all of these impacts, there is a concentrating of the negative effects on already marginalized communities. More often than not, these impacts are felt most strongly by communities of color and lower-income families (Witten et al., 2001; Bierbaum, 2021; Lee and Lubienski, 2017). Without intentional interventions, the harm caused by school closure decisions may continue to worsen the quality of services and education accessible to marginalized students and their families.  </p>
+            <br>
+            <br>
+          </p>
+        </details>
+
+        <details class="tl-drop">
+          <summary>After Schools’ Closure - FUTURE</summary>
+          <p class="muted">
+            [What is currently going on / how people are currently feeling about it (SPECIFIC TO JACKSON!)]  
+
+            [How do other places respond to the threats/reasons posed for school closure]
+            <br>
+            <br>
+            <b>Not as Bad as Expected</b>
+            <br>
+            <p>While school closures have the potential to create significant damage to communities and, in particular, their children, there are thankfully times when the outcomes are not as bas as anticipated (Haartsen and Van Wissen, 2012). [In Jackson…] </p>
+            <br>  
+            <b>Adaptive Reuse</b>
+            <br>
+            <p>The building which former schools once sometimes are reused in creative new ways to suit the needs of the community, such as a recreation center, or housing (Boehm, 2024). However, “redevelopment is not the norm — many shuttered schools remain vacant for years, which can attract vandalism and provide a visual reminder of the loss” (Boehm, 2024, p. 3).  [In Jackson…] </p>
+            <br>
+            <br>  
+            <b>Dreams</b>
+            <br>
+            <p>(quotes from Prof Poe’s interviews) </p>
+            <br>
+
+
+          </p>
+        </details>
+
+      </div>
+    </div>
+    <!-- 🟢 END TIMELINE SECTION -->
+
+    <!-- ===== Landing / Framing Modal ===== -->
+    <div id="framing-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="framing-title">
+      <div class="modal-card">
+        <button class="modal-close" id="framing-close" aria-label="Close framing">✕</button>
+
+        <div class="modal-grid">
+          <div class="modal-media">
+            <img id="framing-image" src="./images/framing.jpg" alt="Project framing image">
+          </div>
+
+          <div class="modal-body">
+            <h1 id="framing-title">Jackson Public Schools</h1>
+            <p class="muted" id="framing-text">
+              <p>Between 2017 and 2022, more than <b>5,000 schools closed</b> nationwide, disrupting the lives of <b>over 1.3 million students</b> (National Center for Educational Statistics in Boehm, 2024, p.2). These closures don’t just affect classrooms—they reshape neighborhoods, alter the built environment, and leave lasting marks on communities. While global forces like neoliberalism play a role (Thiem, 2009; Good, 2022, p. 606-607) local histories and policies often determine the school closure processes. </p>
+
+              <p>In Jackson Mississippi. <b>13 out of XX schools have closed</b>, a staggering number that reflects decades of land-use policies, racial planning processes, and unjust development practices. Although limited in resources, the Jackson Public School District (JPS) is land rich. Yet discriminatory policies and predatory development have prevented JPS from stewarding land in ways that foster collective well-being for the District. Instead, value has been extracted from public assets at the expense of students and families.</p>  
+
+              <p>School closures leave deep scars on communities—but people in Jackson are asking the right question: What can be done to help our neighborhoods and students thrive? As the district prepares for facilities repurposing, the communities across the city must grapple with histories that have led to these closures to create futures in which the city can thrive. The Reparative Narratives, Reparative Futures Initiative aims to support these efforts by asking a critical question: <b>How did we get here?</b> </p>
+
+              <p>This webpage is a living archive, presenting histories and stories that weave together a powerful narrative of Jackson’s school closures. Through a reparative lens, we explore the policies and practices that shaped Jackson’s present-day challenges—while curating community voices that imagine a more equitable future for Jackson, one in which repair and justice is realized.</p>
+              <br>
+              <p><b>Research by:</b> <br> Jocelyn Poe <br> Maya Porath, Marcos Escamilla-Guerrero, Della Alderson </p>
+              
+              <p><b>Website Design and Spatial Analysis:</b> <br> Marcos Escamilla-Guerrero</p>
+
+
+            </p>
+
+            <div class="modal-actions">
+              <button class="btn" id="framing-explore">Explore the map</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-scroll">
+        <div class="card" id="selected-school">
+          <h3>Selected School</h3>
+          <div class="select-hint">No school selected. Click a point or polygon on the map.</div>
+
+          <div class="row" style="margin-top:.5rem;display:none" id="meta-row">
+            <span class="badge"><strong id="meta-level">—</strong></span>
+            <span class="badge dot" id="meta-status">Condition: —</span>
+            <span class="badge" id="meta-type">Type: —</span>
+          </div>
+
+          <div class="grid-2" style="margin-top:.75rem;display:none" id="kpi-row">
+            <div class="kpi">
+              <div class="label">Year Built</div>
+              <div class="value" id="kpi-enrollment">—</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Gross Floor Area</div>
+              <div class="value" id="kpi-capacity">—</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Neighborhood</div>
+              <div class="value" id="kpi-util">—</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Annual Carrying Cost</div>
+              <div class="value" id="kpi-rating">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Map Layers</h3>
+          <div id="layer-toggles" class="layer-toggles muted">
+            <!-- checkboxes will be injected by script.js -->
+          </div>
+          <div id="style-layer-toggles" class="layer-toggles muted">
+            <!-- checkboxes will be injected by script.js -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Enrollment by Year</h3>
+          <canvas id="bar-demo" aria-label="Enrollment by Year"></canvas>
+        </div>
+
+        <div class="card">
+          <h3>Graduation vs Dropout Rates <br> (High School Only)</h3>
+        
+          <canvas
+            id="pie-demo"
+            aria-label="Graduation vs Dropout pie chart"
+          ></canvas>
+        
+          <!-- Year slider -->
+          <div style="margin-top:.75rem">
+            <div class="row" style="justify-content:space-between; align-items:center">
+              <span class="muted">Year</span>
+              <span class="pill" id="pie-year-label">2014</span>
+            </div>
+        
+            <input
+              id="pie-year"
+              type="range"
+              min="2014"
+              max="2025"
+              step="1"
+              value="2014"
+              aria-label="Select year for graduation vs dropout data"
+              style="width:100%; margin-top:.5rem;"
+            />
+          </div>
+        </div>
+
+        
+
+        <div class="card">
+          <h3>Notes</h3>
+          <p class="muted" id="notes">—</p>
+        </div>
+
+        <div class="card">
+          <button class="btn" id="clear">Clear selection</button>
+        </div>
+      </div>
+    </aside>
+
+    <div id="map">
+
+      <!-- Map hint legend -->
+      <div class="legend legend-hint">
+        Tip: Shift+Drag to rotate • Scroll to zoom
+      </div>
+    
+      <!-- Static support legend -->
+      <div id="support_legend" class="legend legend-support">
+        <h4>School Types</h4>
+        <div class="legend-row">
+          <span class="legend-swatch" style="background:#e55757;"></span>
+          Elementary School
+        </div>
+        <div class="legend-row">
+          <span class="legend-swatch" style="background:#60dc87;"></span>
+          Middle School
+        </div>
+        <div class="legend-row">
+          <span class="legend-swatch" style="background:#c6f5ee;"></span>
+          High School
+        </div>
+        <div class="legend-row">
+          <span class="legend-swatch" style="background:#b17bea;"></span>
+          Special School
+        </div>
+        <div class="legend-row">
+          <span class="legend-swatch" style="background:#000000;"></span>
+          Innactive School
+        </div>
+    
+      </div>
+    
+    </div>
+
+
+  </div>
+</body>
+</html>
