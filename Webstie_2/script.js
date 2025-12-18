@@ -85,6 +85,36 @@
         });
       }
 
+      // ===== Timeline lateral collapse =====
+      const app = document.querySelector('.app');
+      const timelineToggleBtn = document.getElementById('timeline-toggle');
+      const timelineEl = document.querySelector('.timeline');
+
+      function setTimelineCollapsed(isCollapsed){
+        if (!app) return;
+
+        app.classList.toggle('timeline-collapsed', isCollapsed);
+        localStorage.setItem('timelineCollapsed', isCollapsed ? '1' : '0');
+
+        // IMPORTANT: let layout settle, then resize the map
+        requestAnimationFrame(() => map.resize());
+      }
+
+      // Restore previous state
+      setTimelineCollapsed(localStorage.getItem('timelineCollapsed') === '1');
+
+      // Button toggles collapse/expand
+      timelineToggleBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const collapsed = app.classList.contains('timeline-collapsed');
+        setTimelineCollapsed(!collapsed);
+      });
+
+      // Optional: clicking the collapsed strip reopens it
+      timelineEl?.addEventListener('click', () => {
+        if (app && app.classList.contains('timeline-collapsed')) setTimelineCollapsed(false);
+      });
+
 
 
   
