@@ -243,8 +243,8 @@ html,body{
 
 /* ===== Popup image ===== */
 .popup-img{
-  width:500px;      /* control popup image size here */
-  max-width:100%;
+  width:100%;      /* control popup image size here */
+  max-width:300px;
   height:auto;
   display:block;
   border-radius:10px;
@@ -266,7 +266,7 @@ html,body{
 
 /* ===== Mapbox popup styling ===== */
 .mapboxgl-popup{
-  max-width:500px;
+  max-width: none !important;   /* remove default constraint */
   font-family:system-ui, sans-serif;
 }
 .mapboxgl-popup-content{
@@ -444,6 +444,62 @@ html,body{
 
 .tl-drop p, .tl-drop ul{
   margin:.6rem 0 0 0;
+}
+
+
+
+
+/* Timeline header with toggle */
+.timeline-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  margin-bottom:.75rem;
+}
+
+.timeline-toggle{
+  appearance:none;
+  border:1px solid var(--border);
+  background:#0b1120;
+  color:var(--text);
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  cursor:pointer;
+  line-height:1;
+  display:grid;
+  place-items:center;
+}
+
+.timeline-toggle:focus{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+/* LATERAL COLLAPSE (timeline becomes a thin tab) */
+.app.timeline-collapsed{
+  grid-template-columns: 380px 1fr 44px; /* sidebar, map, timeline(tab) */
+}
+
+.app.timeline-collapsed .timeline{
+  padding: 8px;
+}
+
+.app.timeline-collapsed .timeline-scroll{
+  display:none; /* hides content when collapsed */
+}
+
+/* Show a vertical “Timeline” label when collapsed */
+.app.timeline-collapsed .timeline::after{
+  content:"Show Narrative";
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .08em;
+  margin: 6px auto;
+  cursor:pointer;
 }
 
 
