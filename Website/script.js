@@ -316,7 +316,7 @@ map.on("load", function() {
     let isLayerVisible = false; // Track layer visibility status
     // Function to check if the layer is visible based on its circle-opacity paint property
     function checkLayerVisibility() {
-        const opacity = map.getPaintProperty('2024_MissingMigrants-type', 'circle-opacity'); // Get circle-opacity paint property
+        const opacity = map.getPaintProperty('j-ms-publicschools', 'circle-opacity'); // Get circle-opacity paint property
         isLayerVisible = opacity !== 0; // Layer is visible if opacity is not 0 (fully visible)
     }
     // Check layer visibility whenever the style data is updated
@@ -324,31 +324,31 @@ map.on("load", function() {
         checkLayerVisibility();
     });
     // Mouseenter event to show popup
-    map.on('mouseenter', '2024_MissingMigrants-type', function (e) {
+    map.on('mouseenter', 'j-ms-publicschools', function (e) {
         if (!isLayerVisible) return; // Exit if the layer is not visible
         var coordinates = e.features[0].geometry.coordinates.slice();
         // Function to transform value from empty to Yes/No
         function emptyToYesNo(val) {
             return val.length > 1 ? "Yes" : "No"; // Return 'Yes' if length > 1, otherwise 'No'
         }
-        const Incident_Y = e.features[0].properties.Incident_Y;
-        const C_Origin = e.features[0].properties.C_Origin;
-        const N_Dead = e.features[0].properties.N_Dead;
-        const N_Missing = e.features[0].properties.N_Missing;
-        const Cause_D = e.features[0].properties.Cause_D;
-        var description = '<h4>' + 'Year of Incident: '+ Incident_Y+ '<br>'+
+        const Name = e.features[0].properties.Name;
+        const Type = e.features[0].properties.Type;
+        const Address = e.features[0].properties.Address;
+        const Annual_Car = e.features[0].properties.Annual_Car;
+        const Status = e.features[0].properties.Status;
+        var description = '<h4>' + 'Name: '+ Name+ '<br>'+
                            '</h4>'+ 
-                          '<p> Country of Origin: '+C_Origin+'</p>'+
-                          '<p> Number of Dead Migrants: '+N_Dead +'<br>'+
-                          'Number of Missing Migrants: '+N_Missing +'<br>'+
-                          'Cause of Dead: '+Cause_D +'</p>'
+                          '<p> Type: '+Type+'</p>'+
+                          '<p> Address: '+Address +'<br>'+
+                          'Annual Carrying Cost: '+Annual_Car +'<br>'+
+                          'Status: '+Status +'</p>'
 
 
 
         popup.setLngLat(coordinates).setHTML(description).addTo(map);
     });
     // Mouseleave event to remove popup
-    map.on('mouseleave', '2024_MissingMigrants-type', function () {
+    map.on('mouseleave', 'j-ms-publicschools', function () {
         if (!isLayerVisible) return; // Exit if the layer is not visible
         map.getCanvas().style.cursor = ''; // Reset cursor
         popup.remove(); // Remove the popup
