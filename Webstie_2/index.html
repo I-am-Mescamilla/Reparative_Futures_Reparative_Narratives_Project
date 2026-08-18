@@ -37,22 +37,57 @@
       <div style="margin-left:auto" class="muted">Click a school to populate the dashboard</div>
     </div>
 
-    <!-- 🟢 NEW TIMELINE SECTION -->
-    <div class="timeline">
-      <div class="timeline-scroll">
-        <!-- 🔹 Timeline header with collapse button -->
-        <div class="timeline-header">
-          <button
-            class="timeline-toggle"
-            id="timeline-toggle"
-            aria-label="Collapse timeline"
-            title="Hide Section"
-          >
-            >>
-          </button>
-          <h2 style="margin:0;">Understanding Jackson Public School System</h2>
-          
+    <!-- ===== Landing / Framing Modal ===== -->
+    <div id="framing-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="framing-title">
+      <div class="modal-card">
+        <button class="modal-close" id="framing-close" aria-label="Close framing">✕</button>
+
+        <div class="modal-grid">
+          <div class="modal-media">
+            <img id="framing-image" src="./images/RNRF_Title.png" alt="Project framing image">
+          </div>
+
+          <div class="modal-body">
+            <h1 id="framing-title">Jackson Public Schools</h1>
+            <p class="muted" id="framing-text">
+              <p>Between 2017 and 2022, more than <b>5,000 schools closed</b> nationwide, disrupting the lives of <b>over 1.3 million students</b> (National Center for Educational Statistics in Boehm, 2024, p.2). These closures don’t just affect classrooms—they reshape neighborhoods, alter the built environment, and leave lasting marks on communities. While global forces like neoliberalism play a role (Thiem, 2009; Good, 2022, p. 606-607) local histories and policies often determine the school closure processes. </p>
+
+              <p>In Jackson Mississippi. <b>13 out of XX schools have closed</b>, a staggering number that reflects decades of land-use policies, racial planning processes, and unjust development practices. Although limited in resources, the Jackson Public School District (JPS) is land rich. Yet discriminatory policies and predatory development have prevented JPS from stewarding land in ways that foster collective well-being for the District. Instead, value has been extracted from public assets at the expense of students and families.</p>
+
+              <p>School closures leave deep scars on communities—but people in Jackson are asking the right question: What can be done to help our neighborhoods and students thrive? As the district prepares for facilities repurposing, the communities across the city must grapple with histories that have led to these closures to create futures in which the city can thrive. The Reparative Narratives, Reparative Futures Initiative aims to support these efforts by asking a critical question: <b>How did we get here?</b> </p>
+
+              <p>This webpage is a living archive, presenting histories and stories that weave together a powerful narrative of Jackson’s school closures. Through a reparative lens, we explore the policies and practices that shaped Jackson’s present-day challenges—while curating community voices that imagine a more equitable future for Jackson, one in which repair and justice is realized.</p>
+              <br>
+              <p><b>Research by:</b> <br> Jocelyn Poe <br> Maya Porath, Marcos Escamilla-Guerrero, Della Alderson </p>
+
+              <p><b>Website Design and Spatial Analysis:</b> <br> Marcos Escamilla-Guerrero</p>
+
+
+            </p>
+
+            <div class="modal-actions">
+              <button class="btn" id="framing-explore">Explore the map</button>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ===== Left panel: Dashboard / Narrative tabs ===== -->
+    <div class="panel">
+      <div class="tabs" role="tablist" aria-label="Panel sections">
+        <button type="button" class="tab-btn active" id="tab-dashboard" data-tab="dashboard"
+                role="tab" aria-selected="true" aria-controls="panel-dashboard">Dashboard</button>
+        <button type="button" class="tab-btn" id="tab-narrative" data-tab="narrative"
+                role="tab" aria-selected="false" aria-controls="panel-narrative">Narrative</button>
+      </div>
+
+      <div class="panel-scroll">
+
+      <!-- ===== Narrative tab: project story/timeline content ===== -->
+      <section class="tab-panel" id="panel-narrative" data-tab-panel="narrative" hidden
+               role="tabpanel" aria-labelledby="tab-narrative">
+        <h2 style="margin:0 0 1rem 0;">Understanding Jackson Public School System</h2>
 
         <img src="./images/JPS_District.jpg"
             style="width:100%;border-radius:8px;margin-bottom:1rem;">
@@ -64,7 +99,7 @@
         <br>
 
         <h3 id="open-framing" class="framing-link">Framing</h3>
-        
+
 
         <!-- ✅ Dropdown chapters -->
         <details class="tl-drop">
@@ -228,48 +263,11 @@
           </p>
         </details>
 
-      </div>
-    </div>
-    <!-- 🟢 END TIMELINE SECTION -->
+      </section>
 
-    <!-- ===== Landing / Framing Modal ===== -->
-    <div id="framing-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="framing-title">
-      <div class="modal-card">
-        <button class="modal-close" id="framing-close" aria-label="Close framing">✕</button>
-
-        <div class="modal-grid">
-          <div class="modal-media">
-            <img id="framing-image" src="./images/RNRF_Title.png" alt="Project framing image">
-          </div>
-
-          <div class="modal-body">
-            <h1 id="framing-title">Jackson Public Schools</h1>
-            <p class="muted" id="framing-text">
-              <p>Between 2017 and 2022, more than <b>5,000 schools closed</b> nationwide, disrupting the lives of <b>over 1.3 million students</b> (National Center for Educational Statistics in Boehm, 2024, p.2). These closures don’t just affect classrooms—they reshape neighborhoods, alter the built environment, and leave lasting marks on communities. While global forces like neoliberalism play a role (Thiem, 2009; Good, 2022, p. 606-607) local histories and policies often determine the school closure processes. </p>
-
-              <p>In Jackson Mississippi. <b>13 out of XX schools have closed</b>, a staggering number that reflects decades of land-use policies, racial planning processes, and unjust development practices. Although limited in resources, the Jackson Public School District (JPS) is land rich. Yet discriminatory policies and predatory development have prevented JPS from stewarding land in ways that foster collective well-being for the District. Instead, value has been extracted from public assets at the expense of students and families.</p>  
-
-              <p>School closures leave deep scars on communities—but people in Jackson are asking the right question: What can be done to help our neighborhoods and students thrive? As the district prepares for facilities repurposing, the communities across the city must grapple with histories that have led to these closures to create futures in which the city can thrive. The Reparative Narratives, Reparative Futures Initiative aims to support these efforts by asking a critical question: <b>How did we get here?</b> </p>
-
-              <p>This webpage is a living archive, presenting histories and stories that weave together a powerful narrative of Jackson’s school closures. Through a reparative lens, we explore the policies and practices that shaped Jackson’s present-day challenges—while curating community voices that imagine a more equitable future for Jackson, one in which repair and justice is realized.</p>
-              <br>
-              <p><b>Research by:</b> <br> Jocelyn Poe <br> Maya Porath, Marcos Escamilla-Guerrero, Della Alderson </p>
-              
-              <p><b>Website Design and Spatial Analysis:</b> <br> Marcos Escamilla-Guerrero</p>
-
-
-            </p>
-
-            <div class="modal-actions">
-              <button class="btn" id="framing-explore">Explore the map</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <aside class="sidebar">
-      <div class="side-scroll">
+      <!-- ===== Dashboard tab: selected school, layer toggles, charts ===== -->
+      <section class="tab-panel" id="panel-dashboard" data-tab-panel="dashboard"
+               role="tabpanel" aria-labelledby="tab-dashboard">
         <div class="card" id="selected-school">
           <h3>Selected School</h3>
           <div class="select-hint">No school selected. Click a point or polygon on the map.</div>
@@ -283,19 +281,19 @@
           <div class="grid-2" style="margin-top:.75rem;display:none" id="kpi-row">
             <div class="kpi">
               <div class="label">Year Built</div>
-              <div class="value" id="kpi-enrollment">—</div>
+              <div class="value" id="kpi-year-built">—</div>
             </div>
             <div class="kpi">
               <div class="label">Gross Floor Area</div>
-              <div class="value" id="kpi-capacity">—</div>
+              <div class="value" id="kpi-floor-area">—</div>
             </div>
             <div class="kpi">
               <div class="label">Neighborhood</div>
-              <div class="value" id="kpi-util">—</div>
+              <div class="value" id="kpi-neighborhood">—</div>
             </div>
             <div class="kpi">
               <div class="label">Annual Carrying Cost</div>
-              <div class="value" id="kpi-rating">—</div>
+              <div class="value" id="kpi-carrying-cost">—</div>
             </div>
           </div>
         </div>
@@ -353,8 +351,10 @@
         <div class="card">
           <button class="btn" id="clear">Clear selection</button>
         </div>
+      </section>
+
       </div>
-    </aside>
+    </div>
 
     <div id="map">
 
