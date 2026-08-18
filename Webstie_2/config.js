@@ -1,6 +1,6 @@
 window.APP_CONFIG = {
   // your map basics
-  mapboxToken: 'pk.eyJ1IjoibWVzY2FtaWxsYS1hcmNoIiwiYSI6ImNtMXRpMXpoNTAybzAyanB4OTFuZnJ1c24ifQ.5yAwDGHE56G-z1ZzjxhWCw',
+  mapboxToken: 'pk.eyJ1IjoibWVzY2FtaWxsYS1hcmNoIiwiYSI6ImNtc3llanR2MDA2djUyd3NleTBtM24xNnEifQ.Gw6L9vHeH2XZ0O98PUmvzg',
   styleUrl: 'mapbox://styles/mescamilla-arch/cmfby113e000h01s40060h9iy',
   center: [-90.1847, 32.2988],
   zoom: 10.5,
@@ -32,8 +32,8 @@ window.APP_CONFIG = {
       },
       layout: { visibility: 'visible' }, // start hidden for checkbox control
       label: 'Jackson City Limits',         // used in the dashboard toggle
-      hoverProps: [''], // used in hover popup
-      enableHover: false,  
+      hoverProps: [], // used in hover popup
+      enableHover: false,
     }
   ],
 
