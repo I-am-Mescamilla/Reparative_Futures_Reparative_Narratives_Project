@@ -25,7 +25,7 @@
       const clickPopup = new mapboxgl.Popup({ closeButton: true, closeOnClick: true });
 
       // Set this to your exact attribute name in the schools layer:
-      const SCHOOL_CODE_FIELD = C.schoolCodeField || 'SchoolCode';
+      const SCHOOL_CODE_FIELD = C.schoolCodeField || 'S_Code';
 
       function escapeHTML(s){
         return String(s)
@@ -45,7 +45,7 @@
       function buildSchoolClickPopupHTML(feature){
         const p = (feature && feature.properties) || {};
         const name = p.name || p.Name || 'Unnamed School';
-        const code = p['S_Code'];
+        const code = p[SCHOOL_CODE_FIELD];
       
         const imgSrc = code ? buildSchoolImagePath(code) : null;
       
@@ -85,39 +85,32 @@
         });
       }
 
-      // ===== Timeline lateral collapse =====
-      const app = document.querySelector('.app');
-      const timelineToggleBtn = document.getElementById('timeline-toggle');
-      const timelineEl = document.querySelector('.timeline');
+      // ===== Left panel tabs (Dashboard / Narrative) =====
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
 
-      function setTimelineCollapsed(isCollapsed){
-        if (!app) return;
-
-        app.classList.toggle('timeline-collapsed', isCollapsed);
-        localStorage.setItem('timelineCollapsed', isCollapsed ? '1' : '0');
+      function setActiveTab(tabName){
+        tabButtons.forEach(btn => {
+          const isActive = btn.dataset.tab === tabName;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-selected', String(isActive));
+        });
+        tabPanels.forEach(panel => {
+          panel.hidden = panel.dataset.tabPanel !== tabName;
+        });
+        localStorage.setItem('activeTab', tabName);
 
         // IMPORTANT: let layout settle, then resize the map
         requestAnimationFrame(() => map.resize());
       }
 
-      // Restore previous state
-      setTimelineCollapsed(localStorage.getItem('timelineCollapsed') === '1');
-
-      // Button toggles collapse/expand
-      timelineToggleBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const collapsed = app.classList.contains('timeline-collapsed');
-        setTimelineCollapsed(!collapsed);
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
       });
 
-      // Optional: clicking the collapsed strip reopens it
-      timelineEl?.addEventListener('click', () => {
-        if (app && app.classList.contains('timeline-collapsed')) setTimelineCollapsed(false);
-      });
+      // Restore previous tab (defaults to the dashboard)
+      setActiveTab(localStorage.getItem('activeTab') || 'dashboard');
 
-
-
-  
       map.on('load', () => {
         map.resize();
   
@@ -172,8 +165,8 @@
         });
 
         // After adding layers, we build toggles + hover popups
-        buildLayerToggles(map, C.extraLayers || []);
-        buildExistingLayerToggles(map, C.styleLayers || [], 'style-layer-toggles');
+        buildLayerToggles(map, C.extraLayers || [], 'layer-toggles');
+        buildLayerToggles(map, C.styleLayers || [], 'style-layer-toggles', { idPrefix: 'toggle-style', requireExisting: true });
         enableHoverPopups(map, [...(C.extraLayers||[]), ...(C.styleLayers||[])]);
 
         // --- Existing schools layer interactions ---
@@ -239,7 +232,7 @@
         if (e.target === modal) hideFraming();
       });
 
-      // Reopen from timeline "Framing" heading
+      // Reopen from the Narrative tab's "Framing" heading
       openFraming?.addEventListener('click', showFraming);
 
       // Escape key closes
@@ -263,75 +256,42 @@
       }
       function pickTopFeature(features){ return (features && features[0]) || null; }
   
-      // --- (B) Create checkboxes and wire visibility ---
-      function buildLayerToggles(map, layers){
-        const wrap = document.getElementById('layer-toggles');
-        if(!wrap) return;
-        wrap.innerHTML = '';
-  
-        layers.forEach(L => {
-          // current visibility
-          const vis = map.getLayoutProperty(L.id, 'visibility') || 'visible';
-          const checked = vis !== 'none';
-  
-          const id = `toggle-${L.id}`;
-          const label = document.createElement('label');
-          label.setAttribute('for', id);
-  
-          const input = document.createElement('input');
-          input.type = 'checkbox';
-          input.id = id;
-          input.checked = checked;
-  
-          input.addEventListener('change', () => {
-            map.setLayoutProperty(L.id, 'visibility', input.checked ? 'visible' : 'none');
-          });
-  
-          const span = document.createElement('span');
-          span.textContent = L.label || L.id;
-  
-          label.appendChild(input);
-          label.appendChild(span);
-          wrap.appendChild(label);
-        });
-      }
-
-      // --- (B.2) Create checkboxes and wire visibility ---
-      function buildExistingLayerToggles(map, layers, containerId){
+      // --- Build layer-visibility checkboxes for a set of layers ---
+      // `requireExisting` skips layers not already present in the style (used for base-style layers,
+      // as opposed to layers this app adds itself via C.extraLayers).
+      function buildLayerToggles(map, layers, containerId, { idPrefix = 'toggle', requireExisting = false } = {}){
         const wrap = document.getElementById(containerId);
         if (!wrap || !layers.length) return;
         wrap.innerHTML = '';
-      
+
         layers.forEach(L => {
-          if (!map.getLayer(L.id)) return; // skip if not in style
-      
+          if (requireExisting && !map.getLayer(L.id)) return;
+
           const vis = map.getLayoutProperty(L.id, 'visibility') || 'visible';
           const checked = vis !== 'none';
-      
-          const id = `toggle-style-${L.id}`;
+
+          const id = `${idPrefix}-${L.id}`;
           const label = document.createElement('label');
           label.setAttribute('for', id);
-      
+
           const input = document.createElement('input');
           input.type = 'checkbox';
           input.id = id;
           input.checked = checked;
-      
+
           input.addEventListener('change', () => {
             map.setLayoutProperty(L.id, 'visibility', input.checked ? 'visible' : 'none');
           });
-      
+
           const span = document.createElement('span');
           span.textContent = L.label || L.id;
-      
+
           label.appendChild(input);
           label.appendChild(span);
           wrap.appendChild(label);
         });
       }
 
-
-  
       // --- (C) Hover popup for any configured layer ---
       function enableHoverPopups(map, layers){
         if (!layers.length) return;
@@ -386,10 +346,10 @@
         level: document.getElementById('meta-level'),
         status: document.getElementById('meta-status'),
         type: document.getElementById('meta-type'),
-        enr: document.getElementById('kpi-enrollment'),
-        cap: document.getElementById('kpi-capacity'),
-        util: document.getElementById('kpi-util'),
-        rating: document.getElementById('kpi-rating'),
+        enr: document.getElementById('kpi-year-built'),
+        cap: document.getElementById('kpi-floor-area'),
+        util: document.getElementById('kpi-neighborhood'),
+        rating: document.getElementById('kpi-carrying-cost'),
         notes: document.getElementById('notes'),
         clearBtn: document.getElementById('clear'),
         title: document.querySelector('#selected-school h3')
@@ -405,6 +365,7 @@
         lastSchoolFeature = null;
         selectedId = null;
         clickPopup.remove();
+        document.documentElement.style.removeProperty('--status-color');
         const src = map.getSource('school-buffer');
         if (src) src.setData({ type: 'FeatureCollection', features: [] });
       });
@@ -424,7 +385,9 @@
         if (cond === 'active' || cond === 'good') dotColor = 'var(--good)';
         else if (cond === 'fair') dotColor = 'var(--warn)';
         else if (cond === 'innactive' || cond === 'inactive' || cond === 'bad' || cond === 'poor') dotColor = 'var(--bad)';
-        document.documentElement.style.setProperty('--accent', dotColor);
+        // Scoped to the status dot only (see .badge.dot::before) — must NOT overwrite the
+        // global --accent, which also drives buttons, focus rings, and the active tab indicator.
+        document.documentElement.style.setProperty('--status-color', dotColor);
   
         el.enr.textContent = d.enrollment ?? '—';
         el.cap.textContent = d.capacity ?? '—';
@@ -516,7 +479,7 @@
         const p = (f && f.properties) || {};
         return {
           name: p.name || p.Name || 'Unnamed School',
-          level: p.level || p.Address || 'Address',
+          level: p.level || p.Address || '—',
           type: p.type || p.Type || 'Public',
           condition: p.condition || p.Status || 'Unknown',
           enrollment: num(p.enrollment || p.Year_Built),
