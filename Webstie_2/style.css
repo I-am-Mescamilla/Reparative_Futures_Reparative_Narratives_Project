@@ -24,11 +24,11 @@ html,body{
 /* ===== Layout ===== */
 .app{
   display:grid;
-  grid-template-columns:380px 1fr 500px;
+  grid-template-columns:420px 1fr;
   grid-template-rows:70px 1fr;
   grid-template-areas:
-    "topbar topbar topbar"
-    "sidebar map timeline";
+    "topbar topbar"
+    "panel  map";
   height:100vh;
 
   /* IMPORTANT: prevents grid reflow loops */
@@ -37,38 +37,11 @@ html,body{
 }
 
 /* IMPORTANT: allow grid children to shrink (prevents vibration) */
-.timeline,
-.sidebar,
+.panel,
 #map,
-.side-scroll{
+.panel-scroll{
   min-height:0;
   min-width:0;
-}
-
-/* ===== Timeline ===== */
-.timeline{
-  grid-area: timeline;
-  display:flex;
-  flex-direction:column;
-  overflow-y:auto;
-  overflow-x:hidden;
-  height:100%;
-  padding:1rem;
-  border-left:1px solid var(--border);
-  background:var(--panel);
-
-  scrollbar-width:thin;                         /* Firefox */
-  scrollbar-color:var(--accent) var(--card);    /* Firefox */
-  scrollbar-gutter: stable;                     /* modern browsers */
-}
-
-/* Timeline scrollbar (Chrome/Edge/Safari) */
-.timeline::-webkit-scrollbar{ width:8px; }
-.timeline::-webkit-scrollbar-track{ background:var(--card); }
-.timeline::-webkit-scrollbar-thumb{
-  background-color:var(--accent);
-  border-radius:4px;
-  border:2px solid var(--card);
 }
 
 /* ===== Topbar ===== */
@@ -89,9 +62,9 @@ html,body{
   color:var(--muted)
 }
 
-/* ===== Sidebar ===== */
-.sidebar{
-  grid-area:sidebar;
+/* ===== Left panel (Dashboard / Narrative tabs) ===== */
+.panel{
+  grid-area:panel;
   display:flex;
   flex-direction:column;
   height:100%;
@@ -99,12 +72,59 @@ html,body{
   background:radial-gradient(1200px 600px at -200px -200px,#0b1120 20%,transparent 60%), var(--panel)
 }
 
-.side-scroll{
+.tabs{
+  display:flex;
+  gap:.25rem;
+  padding:.75rem 1rem 0 1rem;
+  flex:0 0 auto;
+  border-bottom:1px solid var(--border);
+}
+
+.tab-btn{
+  appearance:none;
+  border:1px solid var(--border);
+  border-bottom:none;
+  background:#0b1120;
+  color:var(--muted);
+  padding:.55rem 1rem;
+  border-radius:10px 10px 0 0;
+  cursor:pointer;
+  font:inherit;
+  font-weight:600;
+}
+
+.tab-btn.active{
+  color:var(--text);
+  background:var(--card);
+  box-shadow:inset 0 2px 0 var(--accent);
+}
+
+.tab-btn:focus{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.panel-scroll{
   overflow:auto;
   height:100%;
   padding:1rem;
   scrollbar-gutter: stable;
+
+  scrollbar-width:thin;                         /* Firefox */
+  scrollbar-color:var(--accent) var(--card);    /* Firefox */
 }
+
+/* Panel scrollbar (Chrome/Edge/Safari) */
+.panel-scroll::-webkit-scrollbar{ width:8px; }
+.panel-scroll::-webkit-scrollbar-track{ background:var(--card); }
+.panel-scroll::-webkit-scrollbar-thumb{
+  background-color:var(--accent);
+  border-radius:4px;
+  border:2px solid var(--card);
+}
+
+/* Only one tab panel is shown at a time; script.js toggles [hidden] */
+.tab-panel[hidden]{ display:none; }
 
 .card{
   background:var(--card);
@@ -142,7 +162,8 @@ html,body{
   content:"";
   width:7px;height:7px;
   border-radius:50%;
-  background:var(--accent);
+  /* set per-selection by script.js; falls back to --accent when nothing is selected */
+  background:var(--status-color, var(--accent));
   display:inline-block
 }
 
@@ -404,12 +425,6 @@ html,body{
   }
 }
 
-/* Timeline scroll container (if not already present) */
-.timeline-scroll{
-  overflow:auto;
-  height:100%;
-}
-
 /* Timeline dropdown chapters */
 .tl-drop{
   border:1px solid var(--border);
@@ -446,70 +461,13 @@ html,body{
   margin:.6rem 0 0 0;
 }
 
-
-
-
-/* Timeline header with toggle */
-.timeline-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:.75rem;
-  margin-bottom:.75rem;
-}
-
-.timeline-toggle{
-  appearance:none;
-  border:1px solid var(--border);
-  background:#0b1120;
-  color:var(--text);
-  width:36px;
-  height:36px;
-  border-radius:10px;
-  cursor:pointer;
-  line-height:1;
-  display:grid;
-  place-items:center;
-}
-
-.timeline-toggle:focus{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
-
-/* LATERAL COLLAPSE (timeline becomes a thin tab) */
-.app.timeline-collapsed{
-  grid-template-columns: 380px 1fr 44px; /* sidebar, map, timeline(tab) */
-}
-
-.app.timeline-collapsed .timeline{
-  padding: 8px;
-}
-
-.app.timeline-collapsed .timeline-scroll{
-  display:none; /* hides content when collapsed */
-}
-
-/* Show a vertical “Timeline” label when collapsed */
-.app.timeline-collapsed .timeline::after{
-  content:"Show Narrative";
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  color: var(--muted);
-  font-weight: 600;
-  letter-spacing: .08em;
-  margin: 6px auto;
-  cursor:pointer;
-}
-
-
-
-
-/* ===== Responsive ===== */
+/* ===== Responsive =====
+   NOTE: this is a temporary stacking fallback for narrow viewports, not the
+   final mobile/portrait layout — a dedicated mobile pass is planned separately. */
 @media(max-width:1000px){
   .app{
     grid-template-columns:1fr;
     grid-template-rows:56px 320px 1fr;
-    grid-template-areas:"topbar" "map" "sidebar";
+    grid-template-areas:"topbar" "map" "panel";
   }
 }
