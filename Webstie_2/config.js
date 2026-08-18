@@ -1,6 +1,6 @@
 window.APP_CONFIG = {
   // your map basics
-  mapboxToken: 'pk.eyJ1IjoibWVzY2FtaWxsYS1hcmNoIiwiYSI6ImNtc3llanR2MDA2djUyd3NleTBtM24xNnEifQ.Gw6L9vHeH2XZ0O98PUmvzg',
+  mapboxToken: 'pk.eyJ1IjoibWVzY2FtaWxsYS1hcmNoIiwiYSI6ImNtcnJhcWd0eTAzeGgyeXE2NnBvdjZ0Z3oifQ.NoY1yJKlxwvgkyyWuoBKxg',
   styleUrl: 'mapbox://styles/mescamilla-arch/cmfby113e000h01s40060h9iy',
   center: [-90.1847, 32.2988],
   zoom: 10.5,
