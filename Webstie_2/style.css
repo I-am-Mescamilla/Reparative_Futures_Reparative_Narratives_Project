@@ -265,7 +265,7 @@ html,body{
 /* ===== Popup image ===== */
 .popup-img{
   width:100%;      /* control popup image size here */
-  max-width:300px;
+  max-width:400px;
   height:auto;
   display:block;
   border-radius:10px;
