@@ -85,7 +85,7 @@
         });
       }
 
-      // ===== Left panel tabs (Dashboard / Narrative) =====
+      // ===== Left panel tabs (Landscape / Dashboard / Causes and Effects / Futures) =====
       const tabButtons = document.querySelectorAll('.tab-btn');
       const tabPanels = document.querySelectorAll('.tab-panel');
 
@@ -108,8 +108,8 @@
         btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
       });
 
-      // Restore previous tab (defaults to the dashboard)
-      setActiveTab(localStorage.getItem('activeTab') || 'dashboard');
+      // Restore previous tab (defaults to the landscape tab)
+      setActiveTab(localStorage.getItem('activeTab') || 'landscape');
 
       map.on('load', () => {
         map.resize();
@@ -232,7 +232,7 @@
         if (e.target === modal) hideFraming();
       });
 
-      // Reopen from the Narrative tab's "Framing" heading
+      // Reopen from the Landscape tab's "Framing" heading
       openFraming?.addEventListener('click', showFraming);
 
       // Escape key closes

@@ -73,20 +73,24 @@
       </div>
     </div>
 
-    <!-- ===== Left panel: Dashboard / Narrative tabs ===== -->
+    <!-- ===== Left panel: JPS Landscape / Dashboard / Causes and Effects / Futures tabs ===== -->
     <div class="panel">
       <div class="tabs" role="tablist" aria-label="Panel sections">
-        <button type="button" class="tab-btn active" id="tab-dashboard" data-tab="dashboard"
-                role="tab" aria-selected="true" aria-controls="panel-dashboard">Dashboard</button>
-        <button type="button" class="tab-btn" id="tab-narrative" data-tab="narrative"
-                role="tab" aria-selected="false" aria-controls="panel-narrative">Narrative</button>
+        <button type="button" class="tab-btn active" id="tab-landscape" data-tab="landscape"
+                role="tab" aria-selected="true" aria-controls="panel-landscape">JPS Landscape</button>
+        <button type="button" class="tab-btn" id="tab-dashboard" data-tab="dashboard"
+                role="tab" aria-selected="false" aria-controls="panel-dashboard">JPS Dashboard</button>
+        <button type="button" class="tab-btn" id="tab-causes-effects" data-tab="causes-effects"
+                role="tab" aria-selected="false" aria-controls="panel-causes-effects">JPS Causes and Effects</button>
+        <button type="button" class="tab-btn" id="tab-futures" data-tab="futures"
+                role="tab" aria-selected="false" aria-controls="panel-futures">JPS Futures</button>
       </div>
 
       <div class="panel-scroll">
 
-      <!-- ===== Narrative tab: project story/timeline content ===== -->
-      <section class="tab-panel" id="panel-narrative" data-tab-panel="narrative" hidden
-               role="tabpanel" aria-labelledby="tab-narrative">
+      <!-- ===== JPS Landscape tab: project story/timeline content ===== -->
+      <section class="tab-panel" id="panel-landscape" data-tab-panel="landscape"
+               role="tabpanel" aria-labelledby="tab-landscape">
         <h2 style="margin:0 0 1rem 0;">Understanding Jackson Public School System</h2>
 
         <img src="./images/JPS_District.jpg"
@@ -265,8 +269,8 @@
 
       </section>
 
-      <!-- ===== Dashboard tab: selected school, layer toggles, charts ===== -->
-      <section class="tab-panel" id="panel-dashboard" data-tab-panel="dashboard"
+      <!-- ===== JPS Dashboard tab: selected school, layer toggles, charts ===== -->
+      <section class="tab-panel" id="panel-dashboard" data-tab-panel="dashboard" hidden
                role="tabpanel" aria-labelledby="tab-dashboard">
         <div class="card" id="selected-school">
           <h3>Selected School</h3>
@@ -351,6 +355,18 @@
         <div class="card">
           <button class="btn" id="clear">Clear selection</button>
         </div>
+      </section>
+
+      <!-- ===== JPS Causes and Effects tab: placeholder, content pending ===== -->
+      <section class="tab-panel" id="panel-causes-effects" data-tab-panel="causes-effects" hidden
+               role="tabpanel" aria-labelledby="tab-causes-effects">
+        <p class="muted">Content coming soon.</p>
+      </section>
+
+      <!-- ===== JPS Futures tab: placeholder, content pending ===== -->
+      <section class="tab-panel" id="panel-futures" data-tab-panel="futures" hidden
+               role="tabpanel" aria-labelledby="tab-futures">
+        <p class="muted">Content coming soon.</p>
       </section>
 
       </div>
