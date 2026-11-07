@@ -122,6 +122,12 @@
       </div>
     </div>
 
+    <!-- ===== Image Lightbox: click any image inside a dropdown chapter to view it full screen ===== -->
+    <div id="lightbox-overlay" class="lightbox-overlay hidden" role="dialog" aria-modal="true" aria-label="Enlarged image">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">✕</button>
+      <img id="lightbox-image" src="" alt="">
+    </div>
+
     <!-- ===== Left panel: JPS Landscape / Dashboard / Causes and Effects / Futures tabs ===== -->
     <div class="panel">
       <div class="tabs" role="tablist" aria-label="Panel sections">
@@ -287,6 +293,13 @@
             <br>
             Schools labeled "Repurposed" (shown in yellow) remain under Jackson Public Schools ownership but have been converted to administrative, support, alternative, or other nontraditional educational uses. Former school buildings that were sold or converted to non-JPS uses are included up until their ownership changed, with the exception of Central High School, which now houses offices for the Mississippi Department of Education.
           </p>
+          <br>
+          <br>
+          <img src="./images/School_Closure_Timeline.jpg"
+            style="width:100%;border-radius:8px;margin-bottom:1rem;">
+          <br>
+
+
         </details>
 
         <details class="tl-drop">
@@ -361,7 +374,56 @@
                     1848
                   </th>
                   <td style="vertical-align: top; background-color: var(--color5);">
-                    New Schools. Opening of one of the first publicly supported schools in Jackson at <a href="https://www.apps.mdah.ms.gov/Public/prop.aspx?id=35939&view=facts&y=944" target="_blank">College Green</a>, The Jackson Male Academy, and the Jackson Female Academy. Most schools or classrooms at the time were private.<sup>3</sup>
+                    <b>New Schools.</b> Opening of one of the first publicly supported schools in Jackson at <a href="https://www.apps.mdah.ms.gov/Public/prop.aspx?id=35939&view=facts&y=944" target="_blank">College Green</a>, The Jackson Male Academy, and the Jackson Female Academy. Most schools or classrooms at the time were private, or independent initiatives, in churches or homes.<sup>3</sup>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1848
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color4);">
+                    <b>School Operations.</b> Early efforts for a school oversight included the Jackson School Association, and later a Board of Trustees that operated closely with the city council.
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1865
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color2);">
+                    <b>Legislations.</b> Mississippi State constitutional convention establishes a state education system for all children, bolstered by the first legislature five years later. <sup>4</sup>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1870
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color5);">
+                    <b>New School.</b> First free school for Negros opened  on West Pearl Street. <sup>5</sup>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1878
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color2);">
+                    <b>Legislation.</b> Democratic government dictated state education systems to be separated by race. <sup>6</sup>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1879
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color4);">
+                    <b>School Operations.</b> At this time, there are three free schools operating in the city: the College Green and the West Ward school for white students, and the Negro school.<sup>7</sup> A total of 140 students were enrolled in the white schools, and 223 in the Negro school.
+                    
+                  </td>
+                </tr>
+                <tr>
+                  <th style="vertical-align: top;" scope="row">
+                    1887
+                  </th>
+                  <td style="vertical-align: top; background-color: var(--color2);">
+                    <b>Legislation.</b> The Jackson Separate School System was <a href="https://egrove.olemiss.edu/cgi/viewcontent.cgi?article=1036&context=ms_school_surveys" target="_blank">established</a>. This coincided with efforts to consolidate schools for white students.<sup>8</sup>  In its early years, the board of trustees mainly tended to matters concerning Jackson’s Graded School in the Central School, and provided little support or oversight of the school for “colored or black” students.<sup>9</sup>
                   </td>
                 </tr>
                 <tr>
@@ -369,15 +431,7 @@
                     1887
                   </th>
                   <td style="vertical-align: top; background-color: var(--color5);">
-                    Web accessibility
-                  </td>
-                </tr>
-                <tr>
-                  <th style="vertical-align: top;" scope="row">
-                    1888
-                  </th>
-                  <td style="vertical-align: top; background-color: var(--color5);">
-                    Web accessibility
+                    <b>New School.</b> <a href="https://www.apps.mdah.ms.gov/Public/prop.aspx?id=11715&view=facts&y=944" target="_blank">Central High School</a> opened for white students, consolidating College Green and West Ward Schools. However due to construction delays, the school year began in the College Green building with 321 students.<sup>10</sup>
                   </td>
                 </tr>
                 <tr>
@@ -385,15 +439,15 @@
                     1894
                   </th>
                   <td style="vertical-align: top; background-color: var(--color5);">
-                    Web accessibility
+                    <b>New School.</b> The Colored School opened for Jackson’s black students, later named after <a href="https://mississippiencyclopedia.org/entries/smith-robertson-museum-and-cultural-center/" target="_blank">Smith Robertson</a>. A <a href="https://www.apps.mdah.ms.gov/Public/prop.aspx?id=12432&view=facts&y=944" target="_blank">new building</a> was constructed in 1909.
                   </td>
                 </tr>
                 <tr>
                   <th style="vertical-align: top;" scope="row">
                     1896
                   </th>
-                  <td style="vertical-align: top; background-color: var(--color5);">
-                    Web accessibility
+                  <td style="vertical-align: top; background-color: var(--color2);">
+                    <b>Court Case.</b>  <a href="https://constitutioncenter.org/the-constitution/supreme-court-case-library/plessy-v-ferguson" target="_blank"><i>Plessy vs Ferguson</i></a> determined states may continue to uphold racial segregation by providing <a href="https://hls.harvard.edu/today/plessy-v-ferguson-at-125/" target="_blank">"separate but equal"</a> accommodations.
                   </td>
                 </tr>
                 <tr>
@@ -401,7 +455,7 @@
                     1897
                   </th>
                   <td style="vertical-align: top; background-color: var(--color5);">
-                    Web accessibility
+                    <b>New School.</b>  <a href="https://www.apps.mdah.ms.gov/Public/prop.aspx?id=13323&view=facts&y=944" target="_blank">West Jackson</a> School opened. Students moved into their new building in 1900, later renamed as Poindexter School.<sup>11</sup>
                   </td>
                 </tr>
                 <!-- ===== 1900s ===== -->

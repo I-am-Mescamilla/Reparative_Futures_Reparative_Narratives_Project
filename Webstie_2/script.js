@@ -240,6 +240,44 @@
         if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) hideFraming();
       });
       
+      // ===== Image lightbox (click an image inside a dropdown chapter to view full screen) =====
+      const lightbox = document.getElementById('lightbox-overlay');
+      const lightboxImg = document.getElementById('lightbox-image');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      function openLightbox(src, alt){
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        lightbox.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox(){
+        if (!lightbox || !lightboxImg) return;
+        lightbox.classList.add('hidden');
+        document.body.style.overflow = '';
+        lightboxImg.src = ''; // stop the full-size image from staying loaded in the background
+      }
+
+      // Delegated on document so it also covers dropdown chapters/images added later
+      document.addEventListener('click', (e) => {
+        const img = e.target.closest('.tl-drop img');
+        if (img) openLightbox(img.src, img.alt);
+      });
+
+      lightboxClose?.addEventListener('click', closeLightbox);
+
+      // Click the dark backdrop (not the image itself) to close
+      lightbox?.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+
+      // Escape key closes
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox && !lightbox.classList.contains('hidden')) closeLightbox();
+      });
+
       
       
       
