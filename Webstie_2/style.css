@@ -26,6 +26,17 @@ html,body{
   font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif
 }
 
+/* ===== Links ===== */
+a{
+  color: #c0e4ff;
+  text-decoration: underline;
+}
+
+a:hover{
+  color: #e5e7eb;
+  opacity: 0.8;
+}
+
 /* ===== Layout ===== */
 .app{
   display:grid;
@@ -520,6 +531,16 @@ html,body{
   outline-offset:2px;
 }
 
+
+/* ===== Timeline table ===== */
+table{
+  width:100%;
+  border-collapse: collapse;   /* removes double borders/gaps between adjacent cells */
+}
+
+td, th{
+  padding: 12px;   /* vertical | horizontal — same margin-like spacing on all 4 sides per cell */
+}
 
 /* ===== Responsive =====
    NOTE: this is a temporary stacking fallback for narrow viewports, not the
